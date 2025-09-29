@@ -6,6 +6,7 @@ import Iphone from "@/assets/images/iphone.png";
 import Apple from "@/assets/svg/apple.svg";
 import ArrowRighticon from "@/assets/svg/arrow-right.svg";
 import Card from "@/components/card";
+import axios from "axios";
 
 const Home = () => {
   const slides = [
@@ -74,6 +75,16 @@ const Home = () => {
     return () => clearInterval(timer + "Aksiya tugadi");
   }, []);
 
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://api.escuelajs.co/api/v1/products?limit=5&offset=1")
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
   return (
     <div>
       <section className="container1">
@@ -200,7 +211,19 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <Card />
+        <section className="container mx-auto mt-10">
+          <div className="flex gap-[30px]">
+            {products.map((item) => (
+              <Card
+                key={item.id}
+                sale={item.sale}
+                title={item.title}
+                price={item.price}
+                img={item.images[0]}
+              />
+            ))}
+          </div>
+        </section>
       </section>
     </div>
   );

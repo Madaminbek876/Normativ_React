@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Iphone from "@/assets/images/iphone.png";
 import Apple from "@/assets/svg/apple.svg";
 import ArrowRighticon from "@/assets/svg/arrow-right.svg";
+import Card from "@/components/card";
 
 const Home = () => {
   const slides = [
@@ -70,7 +71,7 @@ const Home = () => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(timer + "Aksiya tugadi");
   }, []);
 
   return (
@@ -199,6 +200,7 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <Card />
       </section>
     </div>
   );

@@ -1,10 +1,10 @@
-import { ChevronRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Iphone from "@/assets/images/iphone.png";
 import Apple from "@/assets/svg/apple.svg";
-import ArrowRight from "@/assets/svg/arrow-right.svg";
+import ArrowRighticon from "@/assets/svg/arrow-right.svg";
 
 const Home = () => {
   const slides = [
@@ -41,10 +41,41 @@ const Home = () => {
     }, 3000);
     return () => clearInterval(interval);
   }, []);
+  //////////////////////////////////////////
+
+  const calculateTimeLeft = () => {
+    const targetDate = new Date("2025-10-01T00:00:00");
+    const now = new Date();
+    const difference = targetDate - now;
+
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    } else {
+      timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
+
+    return timeLeft;
+  };
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   return (
-    <div className="">
-      <section className="container mx-auto">
+    <div>
+      <section className="container1">
         <div className="flex items-center">
           <nav className="mt-[40px]">
             <ul>
@@ -105,7 +136,7 @@ const Home = () => {
                         to="/"
                         className="text-white poppins-heading gap-2 flex items-center font-medium text-base leading-6 tracking-[0%] text-center underline"
                       >
-                        {slides.Link} <img src={ArrowRight} alt="" />
+                        {slides.Link} <img src={ArrowRighticon} alt="" />
                       </Link>
                     </div>
                   </div>
@@ -124,6 +155,47 @@ const Home = () => {
                   }`}
                 ></button>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="container1">
+        <div className=" mt-[140px] mb-[40px]">
+          <div className="flex items-center gap-[16px]">
+            <div className="w-[20px] h-[40px] bg-[#DB4444] rounded-[4px]"></div>
+            <p className="text-[16px] text-[#DB4444] font-semibold">Today’s</p>
+          </div>
+          <div className="flex items-end">
+            <h2 className="font-semibold text-4xl pt-[24px]">Flash Sales</h2>
+            <div className="flex items-center pl-[87px]">
+              <div className="flex items-center gap-[17px] mt-[-20px]">
+                {["days", "hours", "minutes", "seconds"].map((label, index) => (
+                  <React.Fragment key={label}>
+                    <div className="flex flex-col">
+                      <p className="font-medium text-xs leading-[18px] tracking-[0%] poppins-heading">
+                        {label.charAt(0).toUpperCase() + label.slice(1)}
+                      </p>
+                      <p className="font-bold text-[32px] leading-[30px] tracking-[4%] arial-heading">
+                        {String(timeLeft[label]).padStart(2, "0")}
+                      </p>
+                    </div>
+                    {index < 3 && (
+                      <div className="mt-[25px]">
+                        <div className="w-[4px] h-[4px] bg-[#E07575] rounded-full"></div>
+                        <div className="w-[4px] h-[4px] mt-1 bg-[#E07575] rounded-full"></div>
+                      </div>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
+              <div className="flex items-center pl-[510px] gap-[8px]">
+                <div className="w-[46px] h-[46px] rounded-full bg-[#F5F5F5] p-3">
+                  <ArrowLeft />
+                </div>
+                <div className="w-[46px] h-[46px] rounded-full bg-[#F5F5F5] p-3">
+                  <ArrowRight />
+                </div>
+              </div>
             </div>
           </div>
         </div>

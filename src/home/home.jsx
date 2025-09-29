@@ -70,7 +70,7 @@ const Home = () => {
                 <Link>Groceries & Pets</Link>
               </li>
               <li className="pt-[16px]">
-                <Link>Health & Beauty</Link>
+                <Link>Health & Beaut</Link>
               </li>
             </ul>
           </nav>

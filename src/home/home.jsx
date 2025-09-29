@@ -175,7 +175,7 @@ const Home = () => {
         <div className=" mt-[140px] mb-[40px]">
           <div className="flex items-center gap-[16px]">
             <div className="w-[20px] h-[40px] bg-[#DB4444] rounded-[4px]"></div>
-            <p className="text-[16px] text-[#DB4444] font-semibold">Today’s</p>
+            <p className="text-[16px] text-[#DB4444] font-bold">Today’s</p>
           </div>
           <div className="flex items-end">
             <h2 className="font-semibold text-4xl pt-[24px]">Flash Sales</h2>
@@ -212,17 +212,18 @@ const Home = () => {
           </div>
         </div>
         <section className="container mx-auto mt-10">
-          <div className="flex gap-[30px]">
+          <div className="flex gap-[30px] scrollX">
             {products.map((item) => (
               <Card
                 key={item.id}
-                sale={item.sale}
+                category={item.category.name}
                 title={item.title}
                 price={item.price}
                 img={item.images[0]}
               />
             ))}
           </div>
+          
         </section>
       </section>
     </div>

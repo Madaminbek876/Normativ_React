@@ -86,6 +86,7 @@ const Home = () => {
                   <h1>
                     Up to 10% <br /> off Voucher
                   </h1>
+                  <h1>hdej</h1>
                 </h2>
                 <div className="flex items-center gap-[12px]">
                   <Link className="underline">{slides[index].Link}</Link>

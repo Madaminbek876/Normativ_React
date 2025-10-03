@@ -126,7 +126,12 @@
   margin: 0 auto;
 }
 
-.scrollX {
-  overflow-x: auto;
+.skrolX {
+  overflow-y: auto;
   scrollbar-width: none;
+}
+
+.cards:hover .card-button {
+  display: inline-block;
+  color: white;
 }

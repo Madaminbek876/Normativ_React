@@ -7,13 +7,14 @@ import Apple from "@/assets/svg/apple.svg";
 import ArrowRighticon from "@/assets/svg/arrow-right.svg";
 import Card from "@/components/card";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
 
 const Home = () => {
   const slides = [
     {
       id: 1,
       logo: Apple,
-      desc: "iPhone 14 Series",
+      desc: "Iphone 14 Series",
       image: Iphone,
       Link: "Shop Now",
       bgColor: "bg-black",
@@ -21,7 +22,7 @@ const Home = () => {
     {
       id: 2,
       logo: Apple,
-      desc: "iPhone 16 Series",
+      desc: "Iphone 16 Series",
       image: Iphone,
       Link: "Buy Now",
       bgColor: "bg-black",
@@ -29,42 +30,43 @@ const Home = () => {
     {
       id: 3,
       logo: Apple,
-      desc: "iPhone 17 Series",
+      desc: "Iphone 17 Series",
       image: Iphone,
       Link: "Shop Now",
       bgColor: "bg-black",
     },
   ];
-
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentindex, setcurrentIndex] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % slides.length);
+      setcurrentIndex((prev) => (prev + 1) % slides.length);
     }, 3000);
     return () => clearInterval(interval);
   }, []);
   //////////////////////////////////////////
 
-  const calculateTimeLeft = () => {
-    const targetDate = new Date("2025-10-01T00:00:00");
-    const now = new Date();
-    const difference = targetDate - now;
+  const targetDate =
+    Date.now() +
+    3 * 24 * 60 * 60 * 1000 +
+    23 * 60 * 60 * 1000 +
+    19 * 60 * 1000 +
+    56 * 1000;
 
-    let timeLeft = {};
+  const calculateTimeLeft = () => {
+    const difference = targetDate - Date.now();
 
     if (difference > 0) {
-      timeLeft = {
+      return {
         days: Math.floor(difference / (1000 * 60 * 60 * 24)),
         hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
+        minutes: Math.floor((difference / (1000 * 60)) % 60),
         seconds: Math.floor((difference / 1000) % 60),
       };
     } else {
-      timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      return { days: 0, hours: 0, minutes: 0, seconds: 0 };
     }
-
-    return timeLeft;
   };
+
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
@@ -72,14 +74,14 @@ const Home = () => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
-    return () => clearInterval(timer + "Aksiya tugadi");
+    return () => clearInterval(timer);
   }, []);
-
+  ///////////////////////////////////
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     axios
-      .get("https://api.escuelajs.co/api/v1/products?limit=5&offset=1")
+      .get("https://api.escuelajs.co/api/v1/products?limit=5&offset=0")
       .then((res) => {
         setProducts(res.data);
       })
@@ -126,7 +128,7 @@ const Home = () => {
           <div className="w-[892px] h-[344px] overflow-hidden relative ml-[20px] mt-[40px]">
             <div
               className="flex transition-transform duration-700 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              style={{ transform: `translateX(-${currentindex * 100}%)` }}
             >
               {slides.map((slides) => (
                 <div
@@ -135,24 +137,24 @@ const Home = () => {
                 >
                   <div>
                     <div className="flex items-center gap-[24px] pt-[58px] pl-[64px]">
-                      <img src={slides.logo} alt="" />
-                      <p className="font-normal text-base leading-6 tracking-[0%] poppins-heading text-white">
+                      <img src={slides.logo} />
+                      <p className="font-normal text-base leading-6 tracking-[0%] text-white">
                         {slides.desc}
                       </p>
                     </div>
-                    <p className="text-white pt-[20px] pl-[64px] font-semibold text-5xl leading-[60px] tracking-[4%] arial-heading">
-                      Up to 10% <br /> off Vouchers
+                    <p className="text-white pt-[20px] pl-[64px] font-semibold text-5xl leading-[60px] tracking-[4%]">
+                      Up to 10% <br /> off Voucher
                     </p>
                     <div className="mt-[22px] ml-[67px]">
                       <Link
                         to="/"
-                        className="text-white poppins-heading gap-2 flex items-center font-medium text-base leading-6 tracking-[0%] text-center underline"
+                        className="text-white gap-2 flex items-center font-medium text-base leading-6 tracking-[0%] text-center underline"
                       >
-                        {slides.Link} <img src={ArrowRighticon} alt="" />
+                        {slides.Link} <img src={ArrowRighticon} />
                       </Link>
                     </div>
                   </div>
-                  <img className="pt-[16px]" src={slides.image} alt="" />
+                  <img className="pt-[16px]" src={slides.image} />
                 </div>
               ))}
             </div>
@@ -161,9 +163,9 @@ const Home = () => {
               {slides.map((slide, i) => (
                 <button
                   key={slide.id}
-                  onClick={() => setCurrentIndex(i)}
+                  onClick={() => setcurrentIndex(i)}
                   className={`w-3 h-3 rounded-full ${
-                    currentIndex === i ? "bg-red-500" : "bg-gray-400"
+                    currentindex === i ? "bg-red-500" : "bg-gray-400"
                   }`}
                 ></button>
               ))}
@@ -212,7 +214,7 @@ const Home = () => {
           </div>
         </div>
         <section className="container mx-auto mt-10">
-          <div className="flex gap-[30px] scrollX">
+          <div className="flex gap-[30px] skrolX">
             {products.map((item) => (
               <Card
                 key={item.id}
@@ -223,8 +225,11 @@ const Home = () => {
               />
             ))}
           </div>
-          
         </section>
+        <Button className="w-[234px] h-[56px] text-[16px] ml-[468px] mt-[40px]">
+          <Link>View All Products</Link>
+        </Button>
+        <div className="border bottom mt-[60px] mb-[80px]"></div>
       </section>
     </div>
   );
